@@ -51,8 +51,9 @@ def home(request):
                 trip_obj = Trip(**(trip))
                 trip_obj.trip_index = ind
                 trip_obj.distance_mi = distance_metres_to_miles(trip_obj.distance_m, 2)
-                tweet_text = "Just drove {distance_driven} miles!".format(
-                        distance_driven = trip_obj.distance_mi)
+                tweet_text = "I drove {distance_driven} miles on {date_driven:%A, %b-%d-%Y}!".format(
+                        distance_driven = trip_obj.distance_mi,
+                        date_driven = trip_obj.started_at )
                 trip_obj.dist_tweet_str = \
                         '''
                         <iframe
