@@ -20,9 +20,6 @@
                 <input type="submit" value = "Submit">
             </form>
 
-            {% if trip_date %}
-            <h3> Trip data for {{ trip_date|date:"d M Y" }} </h3>
-            {% endif %}
 
             {% if prev_date_resource %}
                 <a href="?trip_date={{ prev_date_resource }}">prev day</a>
@@ -33,6 +30,7 @@
             {% endif %}
 
             {% if trip_data %}
+                <h3> Trip data for {{ trip_date|date:"d M Y" }} </h3>
                 <p> 
                     Number of trips = <b> {{ trip_count }} </b> 
                 </p>
@@ -110,6 +108,8 @@
                     {% endfor %}
                 </table>
                 <!-- <p> {{ trip_data }} </p> -->
+            {% else %}
+                <h3> No trips on {{ trip_date|date:"d M Y" }} </h3>
             {% endif %}
         </div>
     </body>

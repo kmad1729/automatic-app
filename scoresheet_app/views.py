@@ -38,39 +38,41 @@ def home(request):
         trip_data = get_trips_in_between(from_date, to_date)
         context['trip_date'] = from_date
 
-        context['trip_count'] =  trip_data['_metadata']['count']
+        trip_count = int(trip_data['_metadata']['count'])
         context['next_date_resource'] = get_next_day_resource(from_date)
         context['prev_date_resource'] = get_prev_day_resource(from_date)
+        if trip_count  > 0:
+            context['trip_count'] =  trip_data['_metadata']['count']
 
 
-        trip_objs = []
-        for ind, trip in enumerate(trip_data['results'], 1):
-            #pdb.set_trace()
-            trip_obj = Trip(**(trip))
-            trip_obj.trip_index = ind
-            trip_obj.distance_mi = distance_metres_to_miles(trip_obj.distance_m, 2)
-            tweet_text = "Just drove {distance_driven} miles!".format(
-                    distance_driven = trip_obj.distance_mi)
-            trip_obj.dist_tweet_str = \
-                    '''
-                    <iframe
-                      src="https://platform.twitter.com/widgets/tweet_button.html?text={tweet_text}"
-                      width="140"
-                      height="28"
-                      title="Twitter Tweet Button"
-                      style="border: 0; overflow: hidden;">
-                    </iframe>
-                    '''.format(tweet_text = tweet_text)
-                #"https://twitter.com/intent/tweet?text={tweet_text}".format(
-                        #tweet_text = tweet_text)
+            trip_objs = []
+            for ind, trip in enumerate(trip_data['results'], 1):
+                #pdb.set_trace()
+                trip_obj = Trip(**(trip))
+                trip_obj.trip_index = ind
+                trip_obj.distance_mi = distance_metres_to_miles(trip_obj.distance_m, 2)
+                tweet_text = "Just drove {distance_driven} miles!".format(
+                        distance_driven = trip_obj.distance_mi)
+                trip_obj.dist_tweet_str = \
+                        '''
+                        <iframe
+                          src="https://platform.twitter.com/widgets/tweet_button.html?text={tweet_text}"
+                          width="140"
+                          height="28"
+                          title="Twitter Tweet Button"
+                          style="border: 0; overflow: hidden;">
+                        </iframe>
+                        '''.format(tweet_text = tweet_text)
+                    #"https://twitter.com/intent/tweet?text={tweet_text}".format(
+                            #tweet_text = tweet_text)
 
-            
-            trip_objs.append(trip_obj)
+                
+                trip_objs.append(trip_obj)
 
-        context['trip_list'] = trip_objs
+            context['trip_list'] = trip_objs
 
 
-        context['trip_data'] = trip_data
+            context['trip_data'] = trip_data
 
     return render(request, 'scoresheet_app/home.html', context)
 
