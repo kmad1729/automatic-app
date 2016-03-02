@@ -109,7 +109,9 @@
                 </table>
                 <!-- <p> {{ trip_data }} </p> -->
             {% else %}
-                <h3> No trips on {{ trip_date|date:"d M Y" }} </h3>
+                {% if trip_date %}
+                    <h3> No trips on {{ trip_date|date:"d M Y" }} </h3>
+                {% endif %}
             {% endif %}
         </div>
     </body>
