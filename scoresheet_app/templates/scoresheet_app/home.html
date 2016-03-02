@@ -6,24 +6,6 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
-        <script>window.twttr = (function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0],
-            t = window.twttr || {};
-          if (d.getElementById(id)) return t;
-          js = d.createElement(s);
-          js.id = id;
-          js.src = "https://platform.twitter.com/widgets.js";
-          fjs.parentNode.insertBefore(js, fjs);
-         
-          t._e = [];
-          t.ready = function(f) {
-            t._e.push(f);
-          };
-         
-          return t;
-        }(document, "script", "twitter-wjs"));</script>
-
         <script>
             $(function() {
               $( "#datepicker" ).datepicker();
@@ -56,7 +38,7 @@
                 </p>
                 <table border="1">
                     <tr>
-                        <th rowspan="2"> url </th>
+                        <th rowspan="2"> # </th>
                         <th rowspan="2"> distance (mi) </th>
                         <th rowspan="2"> user </th>
                         <th rowspan="2"> driver </th>
@@ -78,11 +60,11 @@
                     </tr>
                     {% for trip in trip_list %}
                         <tr>
-                            <td> <a href = {{ trip.url }}>{{trip.id }}</a>
+                            <td> <a href = {{ trip.url }}>{{ trip.trip_index }}</a>
                             </td>
                             <td>
                                 {{ trip.distance_mi }} 
-                                {{ trip.dist_tweet_str|safe }}
+                                {{ trip.dist_tweet_str|safe}}
                             </td>
                             <td>
                                 <a href = {{ trip.user }}>user_url </a>
