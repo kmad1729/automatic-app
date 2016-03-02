@@ -1,0 +1,134 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+        <script>window.twttr = (function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+          if (d.getElementById(id)) return t;
+          js = d.createElement(s);
+          js.id = id;
+          js.src = "https://platform.twitter.com/widgets.js";
+          fjs.parentNode.insertBefore(js, fjs);
+         
+          t._e = [];
+          t.ready = function(f) {
+            t._e.push(f);
+          };
+         
+          return t;
+        }(document, "script", "twitter-wjs"));</script>
+
+        <script>
+            $(function() {
+              $( "#datepicker" ).datepicker();
+            });
+        </script>
+    </head>
+    <body>
+        <div id="container">
+            <h3> Please print the date of the trip to fetch the data </h3>
+            <form method="GET" action=".">
+                <input type="text" id="datepicker" name="trip_date">
+                <input type="submit" value = "Submit">
+            </form>
+
+            {% if trip_date %}
+            <h3> Trip data for {{ trip_date|date:"d M Y" }} </h3>
+            {% endif %}
+
+            {% if prev_date_resource %}
+                <a href="?trip_date={{ prev_date_resource }}">prev day</a>
+            {% endif %}
+
+            {% if next_date_resource %}
+            <a href="?trip_date={{ next_date_resource }}"> next day</a> 
+            {% endif %}
+
+            {% if trip_data %}
+                <p> 
+                    Number of trips = <b> {{ trip_count }} </b> 
+                </p>
+                <table border="1">
+                    <tr>
+                        <th rowspan="2"> url </th>
+                        <th rowspan="2"> distance (mi) </th>
+                        <th rowspan="2"> user </th>
+                        <th rowspan="2"> driver </th>
+                        <th rowspan="2"> speeding score </th>
+                        <th rowspan="2"> event score </th>
+                        <th rowspan="2"> started at </th>
+                        <th rowspan="2"> ended at </th>
+                        <th rowspan="2"> fuel cost($) </th>
+                        <th rowspan="2"> trip duration(s) </th>
+                        <th colspan="2"> average (kmpl) </th>
+                        <th colspan="3"> duration over </th>
+                    </tr>
+                    <tr>
+                        <th> epa </th>
+                        <th> actual </th>
+                        <th> 80 </th>
+                        <th> 75 </th>
+                        <th> 70 </th>
+                    </tr>
+                    {% for trip in trip_list %}
+                        <tr>
+                            <td> <a href = {{ trip.url }}>{{trip.id }}</a>
+                            </td>
+                            <td>
+                                {{ trip.distance_mi }} 
+                                {{ trip.dist_tweet_str|safe }}
+                            </td>
+                            <td>
+                                <a href = {{ trip.user }}>user_url </a>
+                            </td>
+                            <td>
+                                <a href = {{ trip.driver }}>driver_url </a>
+                            </td>
+                            <td>
+                                {{ trip.score_speeding }}
+                            </td>
+                            <td>
+                                {{ trip.score_events }}
+                            </td>
+                            <td>
+                                {{ trip.started_at|date:"f A" }}
+                            </td>
+                            <td>
+                                {{ trip.ended_at|date:"f A " }}
+                            </td>
+                            <td>
+                                {{ trip.fuel_cost_usd }}
+                            </td>
+                            <td>
+                                {{ trip.duration_s }}
+                            </td>
+                            <td>
+                                {{ trip.average_from_epa_kmpl }}
+                            </td>
+                            <td>
+                                {{ trip.average_kmpl }}
+                            </td>
+                            <td>
+                                {{ trip.duration_over_80_s }}
+                            </td>
+                            <td>
+                                {{ trip.duration_over_75_s }}
+                            </td>
+                            <td>
+                                {{ trip.duration_over_70_s }}
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                </table>
+                <!-- <p> {{ trip_data }} </p> -->
+            {% endif %}
+        </div>
+    </body>
+</html>
