@@ -58,8 +58,8 @@ def home(request):
                         '''
                         <iframe
                           src="https://platform.twitter.com/widgets/tweet_button.html?text={tweet_text}"
-                          width="140"
-                          height="28"
+                          width="61"
+                          height="25"
                           title="Twitter Tweet Button"
                           style="border: 0; overflow: hidden;">
                         </iframe>
