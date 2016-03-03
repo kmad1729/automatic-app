@@ -6,13 +6,6 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-        <script>
-            $(function() {
-              $( "#datepicker" ).datepicker();
-            });
-        </script>
     </head>
     <body>
         <div id="container">
@@ -23,19 +16,31 @@
             </form>
 
 
-            {% if prev_date_resource %}
-                <a href="?trip_date={{ prev_date_resource }}">prev day</a>
-            {% endif %}
-
-            {% if next_date_resource %}
-            <a href="?trip_date={{ next_date_resource }}"> next day</a> 
-            {% endif %}
-
             {% if trip_data %}
                 <h3> Trip data for {{ trip_date|date:"d M Y" }} </h3>
+            {% else %}
+                {% if trip_date %}
+                    <h3> No trips on {{ trip_date|date:"d M Y" }} </h3>
+                {% endif %}
+            {% endif %}
+
+            <div id="prev-next-day-links">
+
+                {% if prev_date_resource %}
+                    <a href="?trip_date={{ prev_date_resource }}">prev day</a>
+                {% endif %}
+
+                {% if next_date_resource %}
+                <a href="?trip_date={{ next_date_resource }}"> next day</a> 
+                {% endif %}
+
+            </div>
+
+            {% if trip_data %}
                 <p> 
                     Number of trips = <b> {{ trip_count }} </b> 
                 </p>
+
                 <table class="table">
                     <tr>
                         <th rowspan="2"> # </th>
@@ -117,11 +122,10 @@
                     <p> Total fuel consumed (Gallons) = {{ total_fuel_consumed_g }} </p>
                     <p> Total fuel cost (usd) = {{ total_fuel_cost_usd }} </p>
                 </div>
-            {% else %}
-                {% if trip_date %}
-                    <h3> No trips on {{ trip_date|date:"d M Y" }} </h3>
-                {% endif %}
             {% endif %}
         </div>
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script src="{% static 'javascript/main.js' %}"></script>
     </body>
 </html>
