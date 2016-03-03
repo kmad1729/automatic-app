@@ -45,7 +45,7 @@
                         <th rowspan="2"> started at </th>
                         <th rowspan="2"> ended at </th>
                         <th rowspan="2"> fuel cost($) </th>
-                        <th rowspan="2"> trip duration(s) </th>
+                        <th rowspan="2"> trip duration(min) </th>
                         <th colspan="2"> average (kmpl) </th>
                         <th colspan="3"> duration over </th>
                     </tr>
@@ -62,7 +62,6 @@
                             </td>
                             <td>
                                 {{ trip.distance_mi }} 
-                                {{ trip.dist_tweet_str|safe}}
                             </td>
                             <td>
                                 <a href = {{ trip.user }}>user_url </a>
@@ -86,7 +85,7 @@
                                 {{ trip.fuel_cost_usd }}
                             </td>
                             <td>
-                                {{ trip.duration_s }}
+                                {{ trip.duration_min }}
                             </td>
                             <td>
                                 {{ trip.average_from_epa_kmpl }}
@@ -108,6 +107,14 @@
                     {% endfor %}
                 </table>
                 <!-- <p> {{ trip_data }} </p> -->
+
+                <div id="day-summary">
+                    <h3> Day summary {{ day_summary_tweet|safe}} </h3>
+                    <p> Total distance travelled (mi) = {{ total_dist_mi }} </p>
+                    <p> Total time travelled (min) = {{ total_duration_min }} </p>
+                    <p> Total fuel consumed (Gallons) = {{ total_fuel_consumed_g }} </p>
+                    <p> Total fuel cost (usd) = {{ total_fuel_cost_usd }} </p>
+                </div>
             {% else %}
                 {% if trip_date %}
                     <h3> No trips on {{ trip_date|date:"d M Y" }} </h3>

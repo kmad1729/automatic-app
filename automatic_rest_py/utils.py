@@ -1,5 +1,9 @@
 from datetime import datetime, timedelta
 
+def format_float(float_number, prec = 2):
+    format_string = "{{:.{precision}f}}".format(precision = prec)
+    return format_string.format(float_number)
+
 def convert_date_str_to_date_obj(date_str):
     month, day, year = map(int, date_str.split('/'))
     return datetime(year = year, month = month, day = day)
@@ -18,7 +22,14 @@ def convert_date_iso_ts_to_date_obj(date_iso_timestamp):
 
     return datetime.strptime(date_iso_timestamp, format_string)
 
-def distance_metres_to_miles(dist_metres, prec):
-    conversion_factor = 0.000621371
-    format_str = '{{:.{precision}f}}'.format(precision = prec)
-    return format_str.format(conversion_factor * float(dist_metres))
+def distance_metres_to_miles(dist_metres_string):
+    METRES_MI_CONVERSION_FACTOR = 0.000621371
+    return METRES_MI_CONVERSION_FACTOR * float(dist_metres_string)
+
+def duration_seconds_to_minutes(seconds_string):
+    SECONDS_MIN_CONVERSION_FACTOR = 1 / 60
+    return float(seconds_string) * SECONDS_MIN_CONVERSION_FACTOR
+
+def volume_liters_to_gallons(litres_string):
+    LITRE_TO_GALLON_CONVERSION_FACTOR = 0.264172
+    return float(litres_string)* LITRE_TO_GALLON_CONVERSION_FACTOR
