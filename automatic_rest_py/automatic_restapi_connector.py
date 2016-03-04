@@ -3,8 +3,7 @@
 import json
 from pprint import pprint
 import requests
-
-auth_token = '1f67dd3e61372bae1766f210758abd2a0327c683'
+from keys import auth_token
 
 url = "https://api.automatic.com/"
 dev = url + 'device/'
